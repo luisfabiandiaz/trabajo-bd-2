@@ -25,6 +25,17 @@ const app= express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.get('/users', (req, res) => {
+    // Lógica para obtener datos de usuarios
+    res.render('users', { /* datos de usuarios */ });
+});
+
+app.get('/reviews', (req, res) => {
+    // Lógica para obtener datos de reseñas
+    res.render('reviews', { /* datos de reseñas */ });
+});
+
+
 app.get("/api", (req, res) => {
     couch.get(dbname, viewUrl).then(
         function(data, headers, status) {

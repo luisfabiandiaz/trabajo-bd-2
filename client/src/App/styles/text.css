@@ -1,0 +1,61 @@
+.primary-text {
+    color: var(--primary-theme-color);
+    font-size: 1.4rem;
+    text-align: justify;
+  }
+  
+  .black-text {
+    color: var(--secondary-text-color);
+    font-size: 1.4rem;
+    text-align: justify;
+  }
+  
+  .primary-highlight-text {
+    color: var(--primary-highlight-color);
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  
+  .primary-subtitle {
+    color: var(--primary-theme-color);
+    font-weight: bold;
+    font-size: 3rem;
+  }
+  
+  .primary-highlight-subtitle {
+    color: var(--primary-text-color);
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .primary-title {
+    color: var(--primary-text-color);
+    font-weight: bold;
+    font-size: 4rem;
+  }
+  
+  .secondary-text {
+    color: var(--secondary-theme-color);
+    font-size: 1.4rem;
+    text-align: justify;
+  }
+  
+  .secondary-subtitle {
+    color: var(--secondary-text-color);
+    font-weight: bold;
+    font-size: 3rem;
+  }
+  
+  .secondary-title {
+    color: var(--secondary-text-color);
+    font-weight: bold;
+    font-size: 4rem;
+    text-align: center;
+  }
+  
+  .floating-text {
+    position: absolute;
+    top: 40%;
+    left: 60%;
+  }
+  

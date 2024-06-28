@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import './index.css';
 function App() {
   const [backendData, setBackendData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +28,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="black-text">
       <input 
         type="text" 
         placeholder="Buscar juego..." 
