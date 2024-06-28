@@ -20,9 +20,10 @@ function App() {
   };
 
   const handleSearchClick = () => {
-    const filteredData = backendData.filter(review => 
-      review.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredData = backendData.filter(games => {
+      const gameTitle = games.title || ""; // Asegúrate de que games.title es una cadena de texto
+      return gameTitle.toLowerCase().includes((searchTerm || "").toLowerCase());
+    });
     setDisplayData(filteredData);
   };
 
@@ -41,19 +42,19 @@ function App() {
         displayData.length === 0 ? (
           <p>No hay resultados</p>
         ) : (
-          displayData.map((review, i) => (
+          displayData.map((games, i) => (
             <div key={i}>
-              <p>Id: {review.id}</p>
-              <p>Title: {review.title}</p>
-              <p>Date: {review.date}</p>
-              {review.win === true ? (
+              <p>Id: {games.app_id}</p>
+              <p>Title: {games.title}</p>
+              <p>Date: {games.date_release}</p>
+              {games.win === true ? (
                   <p>Dwin: Disponible</p>
               ) : (
                   <p>Dwin: No disponible</p>
               )
             }
-              <p>Rating: {review.rating}</p>
-              <p>Price: {review.price}</p>
+              <p>Rating: {games.rating}</p>
+              <p>Price: {games.price_final}</p>
               <hr/>
             </div>
           ))

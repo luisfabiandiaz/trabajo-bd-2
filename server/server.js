@@ -15,8 +15,7 @@ const couch = new NodeCouchDb({
 });
 
 const dbname='trabajofianlbd2';
-const viewUrl='_design/all_names/_view/all';
-
+const viewUrl='/_design/all_view/_view/all_games';
 couch.listDatabases().then(function(dbs){
     console.log(dbs);
 })
@@ -31,8 +30,8 @@ app.get("/api", (req, res) => {
         function(data, headers, status) {
             console.log(data);
             // Extraer todos los datos
-            const reviews = data.data.rows.map(row => row.value);
-            res.json(reviews); // Enviar todos los objetos como un array
+            const games = data.data.rows.map(row => row.value);
+            res.json(games); // Enviar todos los objetos como un array
         },
         function(err) {
             console.error('Error al obtener los datos de la vista:', err);
