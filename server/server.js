@@ -15,7 +15,6 @@ const couch = new NodeCouchDb({
 });
 
 const dbname='trabajofianlbd2';
-const viewUrl='/_design/all_view/_view/all_games';
 couch.listDatabases().then(function(dbs){
     console.log(dbs);
 })
@@ -26,17 +25,40 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/users', (req, res) => {
-    // Lógica para obtener datos de usuarios
-    res.render('users', { /* datos de usuarios */ });
+    const viewUrl='/_design/all_view/_view/all_users';
+    couch.get(dbname, viewUrl).then(
+        function(data, headers, status) {
+            console.log(data);
+            // Extraer todos los datos
+            const users = data.data.rows.map(row => row.value);
+            res.json(users); // Enviar todos los objetos como un array
+        },
+        function(err) {
+            console.error('Error al obtener los datos de la vista:', err);
+            res.status(500).send(err);
+        }
+    );
 });
 
 app.get('/reviews', (req, res) => {
-    // Lógica para obtener datos de reseñas
-    res.render('reviews', { /* datos de reseñas */ });
+    const viewUrl='/_design/all_view/_view/all_reviews';
+    couch.get(dbname, viewUrl).then(
+        function(data, headers, status) {
+            console.log(data);
+            // Extraer todos los datos
+            const reviews = data.data.rows.map(row => row.value);
+            res.json(reviews); // Enviar todos los objetos como un array
+        },
+        function(err) {
+            console.error('Error al obtener los datos de la vista:', err);
+            res.status(500).send(err);
+        }
+    );
 });
 
 
-app.get("/api", (req, res) => {
+app.get("/games", (req, res) => {
+    const viewUrl='/_design/all_view/_view/all_games';
     couch.get(dbname, viewUrl).then(
         function(data, headers, status) {
             console.log(data);
