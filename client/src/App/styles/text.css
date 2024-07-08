@@ -10,6 +10,12 @@
     text-align: justify;
   }
   
+  .black-text-mini {
+    color: var(--secondary-text-color);
+    font-size: 0.5rem;
+    text-align: justify;
+  }
+
   .primary-highlight-text {
     color: var(--primary-highlight-color);
     font-size: 1.3rem;

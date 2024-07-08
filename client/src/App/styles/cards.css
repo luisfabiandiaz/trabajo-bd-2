@@ -1,0 +1,53 @@
+.circular-card {
+    border: solid;
+    border-color: var(--secondary-theme-color);
+    border-radius: 50%;
+    border-width: 0.5rem;
+    height: 20rem;
+    width: 20rem;
+    font-size: 2.5rem;
+    color: var(--secondary-theme-color);
+  }
+  
+  .rectangular-card {
+    border: solid;
+    border-color: var(--secondary-theme-color);
+    border-radius: 50px;
+    border-width: 0.5rem;
+    padding: 2rem;
+    width: 25rem;
+    height: 10rem;
+    transition: background-color 0.3s ease; /* Adding a smooth transition effect */
+  }
+
+  .rectangularinfo-card {
+    border: solid;
+    border-color: var(--secondary-theme-color);
+    border-radius: 50px;
+    border-width: 0.5rem;
+    padding: 2rem;
+    width: 25rem;
+    height: 30rem;
+    transition: background-color 0.3s ease; /* Adding a smooth transition effect */
+  }
+  .square-card {
+    border: solid;
+    border-color: var(--secondary-theme-color);
+    border-radius: 50px;
+    border-width: 0.5rem;
+    padding: 2rem;
+    width: 20rem;
+    height: 20rem;
+    transition: background-color 0.3s ease; /* Adding a smooth transition effect */
+  }
+  
+  .square-card-forms {
+    border: solid;
+    border-color: var(--secondary-theme-color);
+    border-radius: 50px;
+    border-width: 0.5rem;
+    padding: 2rem;
+    width: 28rem;
+    height: 22rem;
+    transition: background-color 0.3s ease; /* Adding a smooth transition effect */
+  }
