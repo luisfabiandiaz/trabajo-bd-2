@@ -139,6 +139,8 @@ function App() {
               <p>Studios: {selectedAnime.Studios}</p>
               <p>Género: {selectedAnime.Genres}</p>
               <p>Episodios: {selectedAnime.Episodes}</p>
+              <p>Salio: {selectedAnime.Aired}</p>
+              <p>Tiempo: {selectedAnime.timeOnAir}</p>
               <p className="black-text-mini">Synopsis: {selectedAnime.sypnopsis}</p>
               <button type="button" onClick={handleCloseInfo}>Cerrar</button>
             </div>
@@ -155,7 +157,7 @@ function App() {
             </>
           ) : (
             searchResults.map((result, index) => (
-              <div key={index}>
+              <div key={index} className="mx-auto rectangular-card content-center items-center justify-center text-center m-1 my-10">
                 <h2>{result.Name}</h2>
                 <p>{result.Score}</p>
                 <button type="button" onClick={() => handleMoreInfo(result)}>Más Info</button>

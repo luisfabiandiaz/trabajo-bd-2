@@ -24,6 +24,36 @@ const app= express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+function calculateTimeOnAir(airedDate) {
+    let startDate, endDate;
+    if (!airedDate) {
+        return 'Fecha de emisión no disponible';
+    }
+    if (airedDate.includes(" to ")) {
+        const dates = airedDate.split(" to ");
+        startDate = new Date(dates[0]);
+        endDate = dates[1].trim() === "?" ? null : new Date(dates[1]);
+    } else {
+        startDate = new Date(airedDate);
+        endDate = new Date();
+    }
+
+    if (isNaN(startDate) || (endDate && isNaN(endDate))) {
+        return 'Fecha de emisión no válida';
+    }
+
+    if (!endDate) {
+        return 'Desconocido';
+    }
+
+    const timeDiff = endDate - startDate;
+    const years = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 365));
+    const months = Math.floor((timeDiff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+    const days = Math.floor((timeDiff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+
+    return `${years} años, ${months} meses, y ${days} días`;
+}
+
 app.post('/search', async (req, res) => {
     const searchTerm = req.body.searchTerm;
     const limit = parseInt(req.body.limit) || 20;
@@ -35,7 +65,7 @@ app.post('/search', async (req, res) => {
 
     const mangoQuery = {
         selector: {
-            Name: { "$regex": `(?i)${searchTerm}` } // Busca el término en el campo "title"
+            Name: { "$regex": `(?i)${searchTerm}` } // Busca el término en el campo "Name"
         },
         limit: limit,
         skip: skip
@@ -46,7 +76,13 @@ app.post('/search', async (req, res) => {
         if (data.docs.length === 0) {
             res.status(404).json({ error: 'No se encontraron resultados' });
         } else {
-            res.json(data.docs);
+            const enrichedDocs = data.docs.map(doc => {
+                return {
+                    ...doc,
+                    timeOnAir: calculateTimeOnAir(doc.Aired)
+                };
+            });
+            res.json(enrichedDocs);
         }
     } catch (err) {
         console.error('Error al realizar la búsqueda:', err);
@@ -126,7 +162,14 @@ app.get('/animes_ninos', async (req, res) => {
         const response = await couch.mango(dbname, mangoQuery, {});
         console.log('Respuesta de CouchDB:', response);
         if (response.data && response.data.docs) {
-            res.json(response.data.docs);
+            const enrichedDocs = response.data.docs.map(doc => {
+                return {
+                    ...doc,
+                    timeOnAir: calculateTimeOnAir(doc.Aired)
+                };
+            });
+
+            res.json(enrichedDocs);
         } else {
             throw new Error('Respuesta inesperada del servidor CouchDB');
         }
@@ -152,8 +195,16 @@ app.get('/top_peores', async (req, res) => {
     try {
         const response = await couch.mango(dbname, mangoQuery, {});
         console.log('Respuesta de CouchDB:', response);
+
         if (response.data && response.data.docs) {
-            res.json(response.data.docs);
+            const enrichedDocs = response.data.docs.map(doc => {
+                return {
+                    ...doc,
+                    timeOnAir: calculateTimeOnAir(doc.Aired)
+                };
+            });
+
+            res.json(enrichedDocs);
         } else {
             throw new Error('Respuesta inesperada del servidor CouchDB');
         }
@@ -162,7 +213,5 @@ app.get('/top_peores', async (req, res) => {
         res.status(500).json({ error: 'Error al obtener los mejores animes.', details: err.message });
     }
 });
-
-
 
 app.listen(5000, () => {console.log("Server starter on 5000")})
